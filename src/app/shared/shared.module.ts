@@ -4,6 +4,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { RouterModule } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { TableModule } from 'primeng/table';
+import { PaginatorModule } from 'primeng/paginator';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { TableModule } from 'primeng/table';
   exports: [
     HeaderComponent,
     ButtonModule,
-    TableModule
+    TableModule,
+    PaginatorModule
   ]
 })
 export class SharedModule { }
