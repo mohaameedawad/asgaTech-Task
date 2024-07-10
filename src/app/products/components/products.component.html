@@ -1,20 +1,20 @@
 
 <!-- src/app/product-list/product-list.component.html -->
-<p-table [value]="products" responsiveLayout="scroll">
+<p-table [value]="products" responsiveLayout="scroll" [paginator]="true" [rows]="5" >
     <ng-template pTemplate="header">
       <tr>
-        <th>Image</th>
         <th>Product Name</th>
+        <th>Image</th>
         <th>Price</th>
-        <th>Available Pieces</th>
+        <th>Quantity</th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-product>
-      <tr>
-        <td>
-          <img [src]="product.ProductImg" alt="{{product.ProductName}}" width="50">
-        </td>
-        <td>{{product.ProductName}}</td>
+      <tr [ngClass]="{'low-stock': product.AvailablePieces < 50}" >
+          <td>{{product.ProductName}}</td>
+          <td>
+            <img [src]="product.ProductImg" alt="{{product.ProductName}}" width="70">
+          </td>
         <td>{{product.ProductPrice}}</td>
         <td>{{product.AvailablePieces}}</td>
       </tr>

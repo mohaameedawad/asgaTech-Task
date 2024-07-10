@@ -1,0 +1,13 @@
+.table-wrapper {
+    width: 100%; 
+    overflow-x: auto; 
+  }
+  
+  .equal-width {
+    width: calc(100% / 3); 
+    text-align: left; 
+  }
+  .table-row:hover {
+    background-color: #f0f0f0; 
+    cursor: pointer; 
+  }
