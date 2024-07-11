@@ -13,15 +13,17 @@ import { orderProducts } from "../../../shared/interfaces/orderProducts.model";
 export class OrdersComponent implements OnInit  {
   
   orders: Order[] = []
-  currentPage = 1;
-  pageSize = 10;
 
   constructor(private ordersService: OrdersService) { }
 
   ngOnInit() {
-    this.ordersService.getOrders().subscribe((res: any) => {
+    this.getOrders();
+  }
 
+  getOrders() {
+    this.ordersService.getOrders().subscribe((res: any) => {
       this.orders = res;
+
       this.orders.forEach((x: any) => {
         x.totalPrice = this.getTotalPrice(x.Products);
         })
@@ -35,7 +37,6 @@ export class OrdersComponent implements OnInit  {
       const product = this.ordersService.products.find(p => p.ProductId === products[i].ProductId);
       if (product) {
         sum += product.ProductPrice * products[i].Quantity;
-        console.log( products[i].ProductId,sum)
       }
     }
     return sum.toFixed(2); 
