@@ -5,8 +5,10 @@ import { RouterModule } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { TableModule } from 'primeng/table';
 import { PaginatorModule } from 'primeng/paginator';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InputNumberModule } from 'primeng/inputnumber';
+import { DialogModule } from 'primeng/dialog';
+import { InputTextModule } from 'primeng/inputtext';
 
 
 @NgModule({
@@ -17,7 +19,9 @@ import { InputNumberModule } from 'primeng/inputnumber';
     CommonModule,
     RouterModule,
     FormsModule,
-    InputNumberModule
+    InputNumberModule,
+    DialogModule,
+    InputTextModule
   ],
   exports: [
     HeaderComponent,
@@ -25,7 +29,9 @@ import { InputNumberModule } from 'primeng/inputnumber';
     TableModule,
     PaginatorModule,
     FormsModule,
-    InputNumberModule
+    InputNumberModule,
+    DialogModule,
+    InputTextModule
   ]
 })
 export class SharedModule { }
