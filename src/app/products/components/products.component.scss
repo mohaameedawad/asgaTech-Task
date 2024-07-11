@@ -1,4 +1,43 @@
-.low-stock {
-    background-color: #24b9ef77;
+
+:host ::ng-deep .p-datatable-thead > tr > th {
+  text-align: center;
+  background-color: #71787e; /* Medium dark grey */
+  color: white;
+  font-weight: bold;
+  padding: 10px;
+  border: 1px solid #ced4da; /* Medium grey */
 }
 
+:host ::ng-deep .p-datatable-tbody > tr > td {
+  text-align: center;
+  padding: 10px;
+  border: 1px solid #ced4da; /* Medium grey */
+}
+
+:host ::ng-deep .p-datatable-tbody > tr.low-stock > td {
+  background-color: #e9ecef; /* Light grey */
+}
+
+:host ::ng-deep .p-datatable-tbody > tr > td > .product-img {
+  width: 70px;
+  height: auto;
+  border-radius: 8px;
+}
+
+:host ::ng-deep .p-datatable-wrapper {
+  overflow-x: auto;
+}
+
+:host ::ng-deep .p-paginator {
+  margin-top: 10px;
+}
+
+:host ::ng-deep .p-paginator .p-paginator-current {
+  color: #71787e; /* Medium dark grey */
+}
+
+:host ::ng-deep .p-datatable-header {
+  background-color: #dcdcdd; /* Light grey */
+  padding: 10px;
+  border-bottom: 1px solid #ced4da; /* Medium grey */
+}
