@@ -5,6 +5,7 @@ export interface Product {
     ProductPrice: number;
     AvailablePieces: number;
     ProductImg: string;
+    editing?: boolean
   }
   
 

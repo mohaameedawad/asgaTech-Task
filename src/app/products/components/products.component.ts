@@ -12,10 +12,23 @@ export class ProductsComponent implements OnInit  {
   products: Product[] = []
   constructor(private productService: ProductsService) { }
 
-  ngOnInit() {
-    this.productService.getProducts().subscribe((res: any) => {
-      this.products = res
-    }
-    )
+  
+  ngOnInit(): void {
+    this.getProducts();
+  }
+
+  getProducts() {
+    this.productService.getProducts().subscribe((products: Product[]) => {
+      this.products = products.map(product => ({ ...product, editing: false }));
+    });
+  }
+
+  startEditing(product: Product) {
+    product.editing = true;
+  }
+
+  updateQuantity(product: Product) {
+    this.productService.editProductQuantity(product.ProductId, product.AvailablePieces);
+    product.editing = false;
   }
 }
