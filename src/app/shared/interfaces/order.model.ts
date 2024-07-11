@@ -2,7 +2,7 @@ import { orderProducts } from "./orderProducts.model";
 
 export interface Order {
     OrderId: number;
-    OrderDate: string;
+    OrderDate: string | null ;
     UserId: string;
     Products: orderProducts [];
     PaymentType: string;

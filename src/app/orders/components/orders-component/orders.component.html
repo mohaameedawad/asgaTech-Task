@@ -1,19 +1,18 @@
 <div class="table-wrapper">
-    <p-table [value]="orders" [paginator]="true" [rows]="10">
+    <p-table [value]="orders" [paginator]="true" [rows]="7">
         <ng-template pTemplate="header">
-            <tr >
-                <th class="equal-width text-center">Order ID</th>
-                <th class="equal-width text-center">Total Price</th>
-                <th class="equal-width text-center">Payment Type</th>
+            <tr>
+                <th class="text-center">Order ID</th>
+                <th class="text-center">Total Price</th>
+                <th class="text-center">Payment Type</th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-order>
-            <tr class="table-row">
+            <tr [ngClass]="{'table-row': true, 'table-row-hover': true}" routerLink="/orders/{{order.OrderId}}">
                 <td class="equal-width text-center">{{ order.OrderId }}</td>
-                <td class="equal-width text-center">{{ order.totalPrice }}</td>
+                <td class="equal-width text-center">{{ order.totalPrice | currency }}</td>
                 <td class="equal-width text-center">{{ order.PaymentType }}</td>
             </tr>
         </ng-template>
     </p-table>
 </div>
-  

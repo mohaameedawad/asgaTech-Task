@@ -1,1 +1,40 @@
-<p>Order Details works!</p>
+<article *ngIf="order">
+    <header>
+      <h2>Order Details</h2>
+      <p><strong>Order ID:</strong> {{ order.OrderId }}</p>
+      <p><strong>Order Date:</strong> {{ order.OrderDate }}</p>
+      <p><strong>Payment Type:</strong> {{ order.PaymentType }}</p>
+    </header>
+  
+    <section>
+      <h3>Customer Details</h3>
+      <p><strong>Name:</strong> {{ customer?.Name }}</p>
+      <p><strong>Email:</strong> {{ customer?.Email }}</p>
+      <p><strong>Phone:</strong> {{ customer?.Phone }}</p>
+    </section>
+  
+    <section>
+      <h3>Products</h3>
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">Product ID</th>
+            <th scope="col">Product Name</th>
+            <th scope="col">Quantity</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let product of order.Products">
+            <td>{{ product.ProductId }}</td>
+            <td>{{ getProductName(product.ProductId) }}</td>
+            <td>{{ product.Quantity }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  </article>
+  
+  <section *ngIf="!order">
+    <p>No order details available.</p>
+  </section>
+  

@@ -1,13 +1,31 @@
 .table-wrapper {
-    width: 100%; 
-    overflow-x: auto; 
-  }
-  
-  .equal-width {
-    width: calc(100% / 3); 
-    text-align: left; 
-  }
-  .table-row:hover {
-    background-color: #f0f0f0; 
-    cursor: pointer; 
-  }
+    width: 100%;
+    overflow-x: auto;
+
+    .equal-width {
+        width: calc(100% / 3);
+        text-align: center;
+        padding: 15px 10px; // Adjust padding as needed
+        color: #495057; // Dark grey text
+        border: 1px solid #ced4da; // Medium grey
+    }
+
+    .table-row {
+        transition: background-color 0.3s ease; // Smooth transition
+        height: 60px; // Adjust height as needed
+        &:hover {
+            background-color: #e9ecef; // Light grey hover color
+            cursor: pointer;
+        }
+    }
+
+    // Customizing header styles
+}
+:host ::ng-deep .p-datatable-thead > tr > th {
+    text-align: center;
+    background-color: #71787e; // Medium dark grey
+    color: white;
+    font-weight: bold;
+    padding: 10px;
+    border: 1px solid #ced4da; // Medium grey
+}

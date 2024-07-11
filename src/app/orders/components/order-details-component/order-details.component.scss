@@ -1,0 +1,75 @@
+$card-bg-color: lightgray;
+$card-border-color: #e0e0e0;
+$card-border-radius: 10px;
+$card-box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+$header-text-color: #333;
+$paragraph-text-color: #555;
+$table-header-bg-color: #f8f8f8;
+$table-border-color: #e0e0e0;
+$table-row-odd-bg-color: #f9f9f9;
+$table-row-even-bg-color: #ffffff;
+$table-text-color: #333;
+$highlight-color: #007bff;
+
+article {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid $card-border-color;
+  border-radius: $card-border-radius;
+  background-color: $card-bg-color;
+  box-shadow: $card-box-shadow;
+}
+
+header {
+  margin-bottom: 20px;
+}
+
+h2, h3 {
+  margin-top: 0;
+  color: $header-text-color;
+  font-weight: 600;
+}
+
+p {
+  margin: 8px 0;
+  color: $paragraph-text-color;
+
+  strong {
+    color: $highlight-color;
+  }
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  color: $table-text-color;
+
+  th, td {
+    padding: 12px 15px;
+    text-align: left;
+    border: 1px solid $table-border-color;
+  }
+
+  th {
+    background-color: $table-header-bg-color;
+    font-weight: 600;
+  }
+
+  tbody {
+    tr:nth-child(odd) {
+      background-color: $table-row-odd-bg-color;
+    }
+
+    tr:nth-child(even) {
+      background-color: $table-row-even-bg-color;
+    }
+  }
+}
+
+section p {
+  color: $paragraph-text-color;
+  margin-bottom: 20px;
+}
