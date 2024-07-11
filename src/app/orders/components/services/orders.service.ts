@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 import { Product } from "../../../shared/interfaces/product.model";
-import { map } from 'rxjs';
+import { map, of, tap } from 'rxjs';
 import { Order } from '../../../shared/interfaces/order.model';
 
 @Injectable({
@@ -11,14 +11,27 @@ import { Order } from '../../../shared/interfaces/order.model';
 export class OrdersService {
 
   products: Product[] = []
+  orders: Order[] = []
 
   constructor(private http: HttpClient) { 
       this.getProducts()
   }
 
+
   getOrders() {
-    let URL = environment.jsonBaseApi + 'orders.json';
-    return this.http.get<any[]>(URL);
+    const localOrders = localStorage.getItem('orders');
+    if (localOrders) {
+      this.orders = JSON.parse(localOrders);
+      return of(this.orders); // Return an observable
+    }
+
+    const URL = environment.jsonBaseApi + 'orders.json';
+    return this.http.get<Order[]>(URL).pipe(
+      tap((res: Order[]) => {
+        this.orders = res;
+        localStorage.setItem('orders', JSON.stringify(this.orders));
+      })
+    );
   }
 
   getCustomerByID(UserId: string) {

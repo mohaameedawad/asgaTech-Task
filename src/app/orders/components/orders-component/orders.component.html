@@ -1,4 +1,8 @@
 <div class="table-wrapper">
+    <div class="orders-header">
+        <button pButton type="button" label="Add New Order" (click)="showDialog()" class="p-button-raised p-button-info"></button>
+    </div>
+
     <p-table [value]="orders" [paginator]="true" [rows]="7">
         <ng-template pTemplate="header">
             <tr>
@@ -16,3 +20,48 @@
         </ng-template>
     </p-table>
 </div>
+
+<p-dialog header="Add New Order" [(visible)]="displayDialog" [modal]="true" [style]="{ 'width': '500px' }">
+    <div class="p-fluid">
+        <div class="p-field">
+            <label for="clientName">Client Name</label>
+            <input type="text" pInputText id="clientName" [(ngModel)]="newOrder.clientName" />
+
+        </div>
+        <div class="p-field">
+            <label for="clientEmail">Client Email</label>
+            <input type="email" pInputText id="clientEmail" [(ngModel)]="newOrder.clientEmail" />
+        </div>
+        <div class="p-field">
+            <label for="clientPhone">Client Phone</label>
+            <p-inputNumber id="clientPhone" [(ngModel)]="newOrder.clientPhone"></p-inputNumber>
+        </div>
+        <div class="p-field">
+            <label for="paymentMethod">Payment Method</label>
+            <p-dropdown id="paymentMethod" [options]="paymentMethods" [(ngModel)]="newOrder.paymentMethod"></p-dropdown>
+        </div>
+        <div class="p-field">
+            <label for="productId">Product ID</label>
+            <p-inputNumber id="productId" [(ngModel)]="productId" (onInput)="checkProductFields()"></p-inputNumber>
+
+        </div>
+        <div class="p-field">
+            <label for="quantity">Quantity</label>
+            <p-inputNumber id="quantity" [(ngModel)]="quantity" (onInput)="checkProductFields()"></p-inputNumber>
+        </div>
+        <div class="p-field">
+            <button type="button" pButton label="Add Product" (click)="addProduct()" [disabled]="!canAddProduct" class="p-button-secondary"></button>
+            <button type="button" pButton label="Cancel" (click)="resetProductFields()" class="p-button-secondary"></button>
+        </div>
+        <div class="p-field">
+            <ul>
+                <li *ngFor="let product of newOrder.products">{{ product.productId }} - {{ product.quantity }}</li>
+            </ul>
+        </div>
+    </div>
+    <div class="p-dialog-footer">
+        <button type="button" pButton label="Cancel" (click)="hideDialog()" class="p-button-secondary"></button>
+        <button type="button" pButton label="Add Order" (click)="addOrder()" class="p-button-primary"></button>
+    </div>
+</p-dialog>
+
