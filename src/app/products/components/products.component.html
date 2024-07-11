@@ -1,1 +1,21 @@
-<p>products works!</p>
+<p-table [value]="products" responsiveLayout="scroll" [paginator]="true" [rows]="7">
+    <ng-template pTemplate="header">
+      <tr>
+        <th class="text-center">Product Name</th>
+        <th class="text-center">Image</th>
+        <th class="text-center">Price</th>
+        <th class="text-center">Quantity</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-product>
+      <tr [ngClass]="{'low-stock': product.AvailablePieces < 50}">
+        <td class="text-center">{{ product.ProductName }}</td>
+        <td class="text-center">
+          <img [src]="product.ProductImg" alt="{{ product.ProductName }}" class="product-img">
+        </td>
+        <td class="text-center">{{ product.ProductPrice | currency }}</td>
+        <td class="text-center">{{ product.AvailablePieces }}</td>
+      </tr>
+    </ng-template>
+  </p-table>
+  
