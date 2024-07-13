@@ -21,47 +21,86 @@
     </p-table>
 </div>
 
-<p-dialog header="Add New Order" [(visible)]="displayDialog" [modal]="true" [style]="{ 'width': '500px' }">
-    <div class="p-fluid">
-        <div class="p-field">
-            <label for="clientName">Client Name</label>
-            <input type="text" pInputText id="clientName" [(ngModel)]="newOrder.clientName" />
-
+<p-dialog header="Add New Order" [(visible)]="displayDialog" (onHide)="hideDialogAndReset();orderForm.reset()" 
+                                 [modal]="true" [style]="{ 'width': '800px' }">
+    <form #orderForm="ngForm" (ngSubmit)="addOrder()">
+        <div class="p-fluid">
+            <div class="row mb-3">
+                <div class="col-md-6 col-sm-6">
+                    <div class="p-field">
+                        <label for="clientName">Client Name</label>
+                        <input type="text" pInputText id="clientName" name="clientName" [(ngModel)]="newOrder.clientName" required />
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-6">
+                    <div class="p-field">
+                        <label for="clientEmail">Client Email</label>
+                        <input type="email" pInputText id="clientEmail" name="clientEmail" [(ngModel)]="newOrder.clientEmail" required />
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-6">
+                    <div class="p-field">
+                        <label for="clientPhone">Client Phone</label>
+                        <p-inputNumber id="clientPhone" name="clientPhone" [(ngModel)]="newOrder.clientPhone" required></p-inputNumber>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-6">
+                    <div class="p-field" style="position: relative;">
+                        <label for="paymentMethod">Payment Method</label>
+                        <i class="pi pi-angle-down" style="font-size: 2rem"></i>
+                        <select id="paymentMethod" name="paymentMethod" class="paymentMethod" [(ngModel)]="newOrder.paymentMethod" required>
+                            <option value="" disabled selected>Select Payment Method</option>
+                            <option *ngFor="let method of paymentMethods" [value]="method">{{ method }}</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="showProductFields">
+                <div class="p-fluid">
+                    <div class="row py-3" style="background-color: gainsboro;">
+                        <div class="col-md-6 col-sm-6">
+                            <label for="productId">Product ID</label>
+                            <p-inputNumber id="productId" name="productId" [(ngModel)]="productId" required></p-inputNumber>
+                        </div>
+                        <div class="col-md-6 col-sm-6">
+                            <label for="quantity">Quantity</label>
+                            <p-inputNumber id="quantity" name="quantity" [(ngModel)]="quantity" required></p-inputNumber>
+                        </div>
+                        <div class="d-flex justify-content-end mt-3" *ngIf="showProductFields">
+                            <button type="button" style="width: fit-content !important;"  [disabled]="!productId || !quantity" pButton label="Add" (click)="addProduct()" class="p-button-secondary  me-3"></button>
+                            <button type="button" style="width: fit-content !important;"  pButton label="Cancel" (click)="resetProductFields()" class="p-button-secondary"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="p-field mt-3">
+                <div class="d-flex justify-content-end mb-3" *ngIf="!showProductFields">
+                    <button type="button" style="width: fit-content !important;"  pButton label="Add New Product" (click)="toggleProductFields(true)" class="p-button-secondary"></button>
+                </div>
+            </div>
+            <div class="p-field">
+                <table *ngIf="newOrder.products.length > 0">
+                    <thead>
+                      <tr>
+                        <th scope="col">Product ID</th>
+                        <th scope="col">Quantity</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let product of newOrder.products">
+                        <td>{{ product.productId }}</td>
+                        <td>{{ product.quantity }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                <!-- <ul>
+                    <li *ngFor="let product of newOrder.products">{{ product.productId }} - {{ product.quantity }}</li>
+                </ul> -->
+            </div>
         </div>
-        <div class="p-field">
-            <label for="clientEmail">Client Email</label>
-            <input type="email" pInputText id="clientEmail" [(ngModel)]="newOrder.clientEmail" />
+        <div class="p-dialog-footer">
+            <button type="button" pButton label="Cancel" class="p-button-secondary me-3" (click)="hideDialogAndReset();orderForm.reset()" ></button>
+            <button type="submit" pButton label="Add Order" class="p-button-primary" [disabled]="!orderForm.valid || newOrder.products.length === 0"></button>
         </div>
-        <div class="p-field">
-            <label for="clientPhone">Client Phone</label>
-            <p-inputNumber id="clientPhone" [(ngModel)]="newOrder.clientPhone"></p-inputNumber>
-        </div>
-        <div class="p-field">
-            <label for="paymentMethod">Payment Method</label>
-            <p-dropdown id="paymentMethod" [options]="paymentMethods" [(ngModel)]="newOrder.paymentMethod"></p-dropdown>
-        </div>
-        <div class="p-field">
-            <label for="productId">Product ID</label>
-            <p-inputNumber id="productId" [(ngModel)]="productId" (onInput)="checkProductFields()"></p-inputNumber>
-
-        </div>
-        <div class="p-field">
-            <label for="quantity">Quantity</label>
-            <p-inputNumber id="quantity" [(ngModel)]="quantity" (onInput)="checkProductFields()"></p-inputNumber>
-        </div>
-        <div class="p-field">
-            <button type="button" pButton label="Add Product" (click)="addProduct()" [disabled]="!canAddProduct" class="p-button-secondary"></button>
-            <button type="button" pButton label="Cancel" (click)="resetProductFields()" class="p-button-secondary"></button>
-        </div>
-        <div class="p-field">
-            <ul>
-                <li *ngFor="let product of newOrder.products">{{ product.productId }} - {{ product.quantity }}</li>
-            </ul>
-        </div>
-    </div>
-    <div class="p-dialog-footer">
-        <button type="button" pButton label="Cancel" (click)="hideDialog()" class="p-button-secondary"></button>
-        <button type="button" pButton label="Add Order" (click)="addOrder()" class="p-button-primary"></button>
-    </div>
+    </form>
 </p-dialog>
-
