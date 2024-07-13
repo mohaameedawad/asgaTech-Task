@@ -11,6 +11,8 @@ import { orderProducts } from "../../../shared/interfaces/orderProducts.model";
 export class OrdersComponent implements OnInit {
   
   orders: Order[] = [];
+  showProductFields: boolean = false;
+
   displayDialog: boolean = false;
   newOrder: any = {
     clientName: '',
@@ -20,8 +22,8 @@ export class OrdersComponent implements OnInit {
     products: []
   };
 
-  productId!: number |null  ;
-  quantity!: number |null ;
+  productId!: number | null;
+  quantity!: number | null;
   canAddProduct: boolean = false;
   paymentMethods: any[] = ['Cash', 'Online'];
 
@@ -40,30 +42,23 @@ export class OrdersComponent implements OnInit {
     });
   }
 
-  checkProductFields() {
-    if(this.productId && this.quantity )
-      this.canAddProduct = true;
-    else
-      this.canAddProduct = false;
+  toggleProductFields(show: boolean) {
+    this.showProductFields = show;
+    this.productId = null;
+    this.quantity = null;
   }
 
   addProduct() {
-      this.newOrder.products.push({ productId: this.productId, quantity: this.quantity });
-      this.resetProductFields();
+    this.newOrder.products.push({ productId: this.productId, quantity: this.quantity });
+    this.toggleProductFields(false);
   }
 
-  resetProductFields() {
-    this.productId = null;
-    this.quantity = null;
-    this.canAddProduct = false;
+  hideDialogAndReset() {
+    this.resetForm();
+    this.displayDialog = false;
   }
 
-  addOrder() {
-    
-    let ordersInStorage = JSON.parse(localStorage.getItem('orders') || '[]');
-    ordersInStorage.push(this.newOrder);
-    localStorage.setItem('orders', JSON.stringify(ordersInStorage));
-
+  resetForm() {
     this.newOrder = {
       clientName: '',
       clientEmail: '',
@@ -71,13 +66,27 @@ export class OrdersComponent implements OnInit {
       paymentMethod: '',
       products: []
     };
+    this.productId = null;
+    this.quantity = null;
+    this.showProductFields = false;
+  }
 
-    this.hideDialog(); // Close dialog after order is added
+  resetProductFields() {
+    this.productId = null;
+    this.quantity = null;
+    this.showProductFields = false;
+  }
+
+  addOrder() {
+    let ordersInStorage = JSON.parse(localStorage.getItem('orders') || '[]');
+    ordersInStorage.push(this.newOrder);
+    localStorage.setItem('orders', JSON.stringify(ordersInStorage));
+    this.hideDialogAndReset();
   }
 
   getTotalPrice(products: orderProducts[]): string {
     let sum = 0;
-    for (let i = 0; i < products.length; i++) {
+    for (let i = 0; i < products?.length; i++) {
       const product = this.ordersService.products.find(p => p.ProductId === products[i].ProductId);
       if (product) {
         sum += product.ProductPrice * products[i].Quantity;

@@ -1,3 +1,10 @@
+$table-header-bg-color: #f8f8f8;
+$table-border-color: #e0e0e0;
+$table-row-odd-bg-color: #f9f9f9;
+$table-row-even-bg-color: #ffffff;
+$table-text-color: #333;
+$highlight-color: #007bff;
+
 .table-wrapper {
     width: 100%;
     overflow-x: auto;
@@ -21,6 +28,17 @@
 
     // Customizing header styles
 }
+
+:host ::ng-deep .p-dialog-footer { 
+    display: flex;
+    justify-content: end;
+    padding: 0%;
+    
+}
+:host ::ng-deep .p-dialog  button { 
+      border-radius: 5px;
+}
+
 :host ::ng-deep .p-datatable-thead > tr > th {
     text-align: center;
     background-color: #71787e; // Medium dark grey
@@ -37,3 +55,59 @@
     margin-bottom: 10px; /* Adjust margin as needed */
   }
   
+  .paymentMethod {
+      width: 100%;
+      font-family: var(--font-family);
+      font-feature-settings: var(--font-feature-settings, normal);
+      font-size: 1rem;
+      color: #495057;
+      background: #ffffff;
+      padding: 0.5rem 0.5rem;
+      border: 1px solid #ced4da;
+      transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
+      appearance: none;
+      border-radius: 3px;
+  }
+.paymentMethod:enabled:focus {
+    outline: 0 none;
+    outline-offset: 0;
+    box-shadow: 0 0 0 0.2rem #a6d5fa;
+    border-color: #2196F3;
+}
+
+:host ::ng-deep .pi-angle-down:before {
+    content: "\e930";
+    font-size: 18px;
+    position: absolute;
+    color: #a5aab0;
+    top: 35px;
+    right: 12px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 10px;
+    color: $table-text-color;
+  
+    th, td {
+      padding: 12px 15px;
+      text-align: left;
+      border: 1px solid $table-border-color;
+    }
+  
+    th {
+      background-color: $table-header-bg-color;
+      font-weight: 600;
+    }
+  
+    tbody {
+      tr:nth-child(odd) {
+        background-color: $table-row-odd-bg-color;
+      }
+  
+      tr:nth-child(even) {
+        background-color: $table-row-even-bg-color;
+      }
+    }
+  }
