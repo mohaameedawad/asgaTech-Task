@@ -6,5 +6,9 @@ export interface Order {
     UserId: string;
     Products: orderProducts [];
     PaymentType: string;
+    clientEmail?: string;
+    clientName?:string; 
+    clientPhone?: number
+    totalPrice?: number; 
 }
 

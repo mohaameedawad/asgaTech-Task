@@ -30,8 +30,8 @@ export class OrderDetailsComponent implements OnInit {
   getOrderById() {
     this.ordersService.getOrderById(this.orderId).subscribe((res: any) => {
       this.order = res;
-      this.order.OrderDate = this.datePipe.transform(this.order?.OrderDate, 'EEE MMM dd yyyy');
-
+      this.order.OrderDate = this.convertDate();
+      
       this.getCustomerDetails();
   })    
 }
@@ -47,6 +47,10 @@ getProductName(id: number): any {
   var product = this.ordersService.products.find((x: any) => x.ProductId === id);
   if (product) 
     return product.ProductName;
+}
+
+convertDate() {
+ return this.datePipe.transform(this.order?.OrderDate, 'EEE MMM dd yyyy')
 }
 
 }

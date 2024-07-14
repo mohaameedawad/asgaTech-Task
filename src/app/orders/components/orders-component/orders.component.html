@@ -48,7 +48,7 @@
                     <div class="p-field" style="position: relative;">
                         <label for="paymentMethod">Payment Method</label>
                         <i class="pi pi-angle-down" style="font-size: 2rem"></i>
-                        <select id="paymentMethod" name="paymentMethod" class="paymentMethod" [(ngModel)]="newOrder.paymentMethod" required>
+                        <select id="paymentMethod" name="paymentMethod" class="paymentMethod" [(ngModel)]="newOrder.PaymentType" required>
                             <option value="" disabled selected>Select Payment Method</option>
                             <option *ngFor="let method of paymentMethods" [value]="method">{{ method }}</option>
                         </select>
@@ -59,15 +59,15 @@
                 <div class="p-fluid">
                     <div class="row py-3" style="background-color: gainsboro;">
                         <div class="col-md-6 col-sm-6">
-                            <label for="productId">Product ID</label>
-                            <p-inputNumber id="productId" name="productId" [(ngModel)]="productId" required></p-inputNumber>
+                            <label for="ProductId">Product ID</label>
+                            <p-inputNumber id="ProductId" name="ProductId" [(ngModel)]="ProductId" required></p-inputNumber>
                         </div>
                         <div class="col-md-6 col-sm-6">
-                            <label for="quantity">Quantity</label>
-                            <p-inputNumber id="quantity" name="quantity" [(ngModel)]="quantity" required></p-inputNumber>
+                            <label for="Quantity">Quantity</label>
+                            <p-inputNumber id="Quantity" name="Quantity" [(ngModel)]="Quantity" required></p-inputNumber>
                         </div>
                         <div class="d-flex justify-content-end mt-3" *ngIf="showProductFields">
-                            <button type="button" style="width: fit-content !important;"  [disabled]="!productId || !quantity" pButton label="Add" (click)="addProduct()" class="p-button-secondary  me-3"></button>
+                            <button type="button" style="width: fit-content !important;"  [disabled]="!ProductId || !Quantity" pButton label="Add" (click)="addProduct()" class="p-button-secondary  me-3"></button>
                             <button type="button" style="width: fit-content !important;"  pButton label="Cancel" (click)="resetProductFields()" class="p-button-secondary"></button>
                         </div>
                     </div>
@@ -88,13 +88,13 @@
                     </thead>
                     <tbody>
                       <tr *ngFor="let product of newOrder.products">
-                        <td>{{ product.productId }}</td>
-                        <td>{{ product.quantity }}</td>
+                        <td>{{ product.ProductId }}</td>
+                        <td>{{ product.Quantity }}</td>
                       </tr>
                     </tbody>
                   </table>
                 <!-- <ul>
-                    <li *ngFor="let product of newOrder.products">{{ product.productId }} - {{ product.quantity }}</li>
+                    <li *ngFor="let product of newOrder.products">{{ product.ProductId }} - {{ product.Quantity }}</li>
                 </ul> -->
             </div>
         </div>

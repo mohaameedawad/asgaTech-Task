@@ -8,9 +8,9 @@
   
     <section>
       <h3>Customer Details</h3>
-      <p><strong>Name:</strong> {{ customer?.Name }}</p>
-      <p><strong>Email:</strong> {{ customer?.Email }}</p>
-      <p><strong>Phone:</strong> {{ customer?.Phone }}</p>
+      <p><strong>Name:</strong> {{ customer?.Name || order.clientName}}</p>
+      <p><strong>Email:</strong> {{ customer?.Email || order.clientEmail }}</p>
+      <p><strong>Phone:</strong> {{ customer?.Phone || order.clientPhone }}</p>
     </section>
   
     <section>

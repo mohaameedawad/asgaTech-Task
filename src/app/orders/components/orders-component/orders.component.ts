@@ -14,18 +14,20 @@ export class OrdersComponent implements OnInit {
   showProductFields: boolean = false;
 
   displayDialog: boolean = false;
+  ProductId!: number | null;
+  Quantity!: number | null;
+  canAddProduct: boolean = false;
+  paymentMethods: any[] = ['Cash', 'Online'];
+  
   newOrder: any = {
     clientName: '',
     clientEmail: '',
     clientPhone: '',
-    paymentMethod: '',
-    products: []
+    PaymentType: '',
+    products: [],
+    totalPrice: ''
   };
 
-  productId!: number | null;
-  quantity!: number | null;
-  canAddProduct: boolean = false;
-  paymentMethods: any[] = ['Cash', 'Online'];
 
   constructor(private ordersService: OrdersService) {}
 
@@ -36,20 +38,17 @@ export class OrdersComponent implements OnInit {
   getOrders() {
     this.ordersService.getOrders().subscribe((res: any) => {
       this.orders = res;
-      this.orders.forEach((x: any) => {
-        x.totalPrice = this.getTotalPrice(x.Products);
-      });
     });
   }
 
   toggleProductFields(show: boolean) {
     this.showProductFields = show;
-    this.productId = null;
-    this.quantity = null;
+    this.ProductId = null;
+    this.Quantity = null;
   }
 
   addProduct() {
-    this.newOrder.products.push({ productId: this.productId, quantity: this.quantity });
+    this.newOrder.products.push({ ProductId: this.ProductId, Quantity: this.Quantity });
     this.toggleProductFields(false);
   }
 
@@ -66,34 +65,37 @@ export class OrdersComponent implements OnInit {
       paymentMethod: '',
       products: []
     };
-    this.productId = null;
-    this.quantity = null;
+    this.ProductId = null;
+    this.Quantity = null;
     this.showProductFields = false;
   }
 
   resetProductFields() {
-    this.productId = null;
-    this.quantity = null;
+    this.ProductId = null;
+    this.Quantity = null;
     this.showProductFields = false;
   }
 
   addOrder() {
     let ordersInStorage = JSON.parse(localStorage.getItem('orders') || '[]');
-    ordersInStorage.push(this.newOrder);
+    var Order = {
+            OrderId:   (ordersInStorage[ordersInStorage.length - 1].OrderId + 1) ,
+            OrderDate:   new Date().toISOString(),
+            clientName: this.newOrder.clientName,
+            clientEmail: this.newOrder.clientEmail,
+            clientPhone: this.newOrder.clientPhone,
+            PaymentType: this.newOrder.PaymentType,
+            Products: this.newOrder.products,
+            UserId: +(Math.random() * 10000),
+            totalPrice: +(this.ordersService.getTotalPrice(this.newOrder.products))
+          }
+
+     ordersInStorage.push(Order);
     localStorage.setItem('orders', JSON.stringify(ordersInStorage));
+    this.getOrders()
     this.hideDialogAndReset();
   }
 
-  getTotalPrice(products: orderProducts[]): string {
-    let sum = 0;
-    for (let i = 0; i < products?.length; i++) {
-      const product = this.ordersService.products.find(p => p.ProductId === products[i].ProductId);
-      if (product) {
-        sum += product.ProductPrice * products[i].Quantity;
-      }
-    }
-    return sum.toFixed(2);
-  }
 
   getProductName(id: number): any {
     const product = this.ordersService.products.find((x: any) => x.ProductId === id);
